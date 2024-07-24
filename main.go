@@ -3,18 +3,31 @@ package main
 import (
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 )
 
 func main() {
 	url := "http://localhost:8080"
-	response, error := http.Get(url)
 
-	if error != nil {
-		log.Fatal(error)
-		return
+	data, _ := GetRequest(url)
+
+	fmt.Println(string(data))
+}
+
+func GetRequest(url string) ([]byte, error) {
+	response, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
 	}
-	body, _ := io.ReadAll(response.Body)
-	fmt.Println(string(body))
+
+	resBody, readError := io.ReadAll(response.Body)
+
+	if readError != nil {
+		fmt.Println(readError)
+		return nil, readError
+	}
+
+	return resBody, nil
+
 }
