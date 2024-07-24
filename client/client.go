@@ -19,6 +19,8 @@ func GetRequest(url string) ([]byte, error) {
 		return nil, readError
 	}
 
+	response.Body.Close()
+
 	return resBody, nil
 
 }
@@ -34,6 +36,8 @@ func PostRequest(url string, contentType string, data string) ([]byte, error) {
 		return nil, err
 	}
 
+	response.Body.Close()
+
 	return responseData, nil
 }
 
@@ -47,6 +51,8 @@ func PostFormData(url string, data url.Values) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	response.Body.Close()
 
 	return responseData, nil
 }
