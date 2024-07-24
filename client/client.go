@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 func GetRequest(url string) ([]byte, error) {
@@ -20,6 +21,20 @@ func GetRequest(url string) ([]byte, error) {
 
 	return resBody, nil
 
+}
+
+func PostRequest(url string, contentType string, data string) ([]byte, error) {
+	response, error := http.Post(url, contentType, strings.NewReader(data))
+	if error != nil {
+		return nil, error
+	}
+	responseData, err := io.ReadAll(response.Body)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return responseData, nil
 }
 
 func PostFormData(url string, data url.Values) ([]byte, error) {

@@ -2,20 +2,23 @@ package main
 
 import (
 	"fmt"
-	"net/url"
 
 	"github.com/OlyMahmudMugdho/go-http-client/client"
 )
 
 func main() {
-	myUrl := "http://localhost:8080"
+	getUrl := "http://localhost:8080"
+	postUrl := getUrl + "/post"
 
-	data, _ := client.GetRequest(myUrl)
+	/* data, _ := client.GetRequest(getUrl)
 	fmt.Println(string(data))
 
 	form := url.Values{}
 	form.Add("name", "mugdho")
-	formUrl := myUrl + "/post"
-	formData, _ := client.PostFormData(formUrl, form)
-	fmt.Println(string(formData))
+	formData, _ := client.PostFormData(postUrl, form)
+	fmt.Println(string(formData)) */
+
+	response, _ := client.PostRequest(postUrl, "application/json", `{"name" :"mugdho"}`)
+	fmt.Println(string(response))
+
 }
