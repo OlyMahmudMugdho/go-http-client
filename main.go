@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/OlyMahmudMugdho/go-http-client/client"
+	"github.com/OlyMahmudMugdho/go-http-client/utils"
 )
 
 func main() {
@@ -20,5 +21,7 @@ func main() {
 
 	response, _ := client.PostRequest(postUrl, "application/json", `{"name" :"mugdho"}`)
 	fmt.Println(string(response))
+
+	utils.GetArgs()
 
 }
