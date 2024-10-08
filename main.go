@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 
 	"github.com/OlyMahmudMugdho/go-http-client/client"
 	"github.com/OlyMahmudMugdho/go-http-client/utils"
@@ -23,5 +25,10 @@ func main() {
 	fmt.Println(string(response))
 
 	utils.GetArgs()
+
+	router := http.NewServeMux()
+	router.HandleFunc("/", client.ReverseProxy)
+	fmt.Println("server is running on port 8080")
+	log.Fatal(http.ListenAndServe(":8080", router))
 
 }

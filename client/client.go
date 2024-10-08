@@ -3,6 +3,7 @@ package client
 import (
 	"io"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"strings"
 )
@@ -55,4 +56,15 @@ func PostFormData(url string, data url.Values) ([]byte, error) {
 	response.Body.Close()
 
 	return responseData, nil
+}
+
+func ReverseProxy(w http.ResponseWriter, r *http.Request) {
+	url, _ := url.Parse("http://localhost:8081")
+	proxy := httputil.ReverseProxy{
+		Rewrite: func(pr *httputil.ProxyRequest) {
+			pr.SetURL(url)
+			pr.Out.Host = pr.In.Host
+		},
+	}
+	proxy.ServeHTTP(w, r)
 }
